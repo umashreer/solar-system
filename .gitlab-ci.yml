@@ -31,3 +31,30 @@ unit_testing:
         - test-results.xml
       reports:
         junit: test-results.xml
+
+code_coverage:
+    stage: test
+    image: node:22-alpine3.21
+    before_script:
+        - npm install
+    script:
+        - npm run coverage
+    artifacts:
+      untracked: false
+      when: always
+      access: all
+      expire_in: 3 days
+      name: Code-Coverage-Results
+      reports:
+        coverage_report:
+          coverage_format: cobertura
+          path: coverage/cobertura-coverage.xml
+    coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+
+sample-job:
+  stage: test
+  needs:
+    - code_coverage
+  image: node:22-alpine:3.21
+  script:
+    - echo testing sample job
