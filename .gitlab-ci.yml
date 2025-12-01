@@ -51,10 +51,3 @@ code_coverage:
           path: coverage/cobertura-coverage.xml
     coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
     allow_failure: true
-sample-job:
-  stage: test
-  needs:
-    - code_coverage
-  image: node:22-alpine3.21
-  script:
-    - echo testing sample job
