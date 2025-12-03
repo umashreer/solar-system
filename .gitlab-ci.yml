@@ -8,8 +8,11 @@ workflow:
 
 stages:
     - test
+    - containerization
 
-
+variables:
+  DOCKER_USERNAME: siddharth67
+  IMAGE_VERSION: $CI_PIPELINE_ID
 
 unit_testing:
     stage: test
@@ -82,3 +85,13 @@ code_coverage:
           path: coverage/cobertura-coverage.xml
     coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
     allow_failure: true
+
+docker_build:
+  stage: containerization
+  image: docker:24.0.5
+  dependencies: []
+  services:
+    - docker:24.0.5-dind
+  script:
+    - docker build -t $DOCKER_USERNAME/solar-system:$IMAGE_VERSION .
+    - docker images $DOCKER_USERNAME/solar-system:$IMAGE_VERSION
