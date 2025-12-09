@@ -11,7 +11,7 @@ stages:
     - containerization
 
 variables:
-  DOCKER_USERNAME: siddharth67
+  DOCKER_USERNAME: anushakuppili19
   IMAGE_VERSION: $CI_PIPELINE_ID
 
 unit_testing:
