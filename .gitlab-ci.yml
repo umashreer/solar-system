@@ -11,7 +11,7 @@ stages:
     - containerization
 
 variables:
-  DOCKER_USERNAME: anushakuppili19
+  DOCKER_USERNAME: siddharth67
   IMAGE_VERSION: $CI_PIPELINE_ID
 
 unit_testing:
@@ -111,7 +111,7 @@ docker_test:
   services:
     - docker:24.0.5-dind
   script:
-    - docker load -i image/solar-sytem-image-$CI_PIPELINE_ID.tar
+    - docker load -i image/solar-system-image-$CI_PIPELINE_ID.tar
     - docker run --name solar-system-app -d -p 3000:3000 $DOCKER_USERNAME/solar-system:$IMAGE_VERSION
     - export IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' solar-system-app)
     - echo $IP
