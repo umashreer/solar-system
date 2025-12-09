@@ -126,6 +126,6 @@ docker_push:
   services:
     - docker:24.0.5-dind
   script:
-    - docker load-i image/solar-system-image-$CI_PIPELINE_ID.tar
+    - docker load -i image/solar-system-image-$CI_PIPELINE_ID.tar
     - docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
     - docker push $DOCKER_USERNAME/solar-system:$IMAGE_VERSION
