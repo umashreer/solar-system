@@ -116,3 +116,16 @@ docker_test:
     - export IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' solar-system-app)
     - echo $IP
     - docker run alpine wget -q -0 - http://$IP:3000/live | grep live
+
+docker_push:
+  stage: containerization
+  needs:
+    - docker_build
+    - docker_test
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  script:
+    - docker load-i image/solar-system-image-$CI_PIPELINE_ID.tar
+    - docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
+    - docker push $DOCKER_USERNAME/solar-system:$IMAGE_VERSION
